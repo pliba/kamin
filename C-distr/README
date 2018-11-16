@@ -1,0 +1,100 @@
+C versions of the language interpreters from "Programming Languages,
+An Interpreter-based Approach," by Sam Kamin
+====================================================================
+
+This directory contains C versions of the interpreters, produced
+by the p2c translator from Cal Tech.  These versions were created, and
+the makefile written, by Dirk Grunwald of Univ. of Colorado at
+Boulder (thanks, Dirk!).  To compile and test the interpreters,
+just say "make" in this directory.
+
+The C versions of the interpreters were produced automatically
+from the Pascal versions in the distr directory, using p2c, a Pascal-to-C
+translator written by Dave Gillespie of Cal Tech.  (p2c can be
+obtained by anonymous ftp from csvax.caltech.edu.)  The test
+cases included here are identical to those in the distr directory,
+and produce identical results.
+
+Though p2c does a remarkably good job, these interpreters are not
+hand-written, and are somewhat obscure in spots.  So they are
+probably not appropriate for the "interpreter modification"
+exercises.  For programming in the interpreted languages, on the
+other hand, they are perfectly good.
+
+The files in this directory are essentially the same as those in
+the distr directory.  The interpreters have names xxx.c instead
+of xxx.p, the file TEST.INTERPS is omitted (the Makefile takes its
+place), and the README file is different.  Also, this directory
+includes a subdirectory p2c containing files needed to compile the
+C interpreters.  The biggest difference is the omission of the
+files related to memory management (lisp.stack.p, lisp.ms-gc.p,
+lisp.ss-gc.p, and lisp.refcnt.p, and their associated test files);
+since these exist only for expository purposes (the language they
+interpret is the same as that interpreted by lisp.c), and the C
+versions of the code are not really readable (and are not explained
+in the book), there seems no point in including them here.
+
+Here is an explanation of the files containing the interpreters and
+test cases:
+
+1. Interpreters (C source files):
+
+     chap1.c - Chapter 1
+     lisp.c - Lisp
+     apl.c - APL
+     scheme.c - Scheme
+     sasl.c - SASL
+     clu.c - CLU
+     smalltalk.c - Smalltalk
+     prolog.c - Prolog
+
+   "make" will compile these files, leaving binaries called chap1,
+   lisp, etc.
+
+2. Code files, including all code from chapters (plus some test cases
+   not appearing in text).  Note that you may be unable to run these
+   files as is due to memory limitations.  In that case, just split them
+   up and run the pieces separately.  (The Prolog code is given in two
+   pieces to avoid the problem of redefining predicates.)
+
+     code.ch1 - Chapter 1
+     code.lsp - Lisp
+     code.apl - APL
+     code.sch - Scheme
+     code.ssl - SASL
+     code.clu - CLU
+     code.smt - Smalltalk
+     code1.pro - Prolog, part 1
+     code2.pro - Prolog, part 2
+        
+3. Output of code files.  Use these to check that the interpreters
+   are running correctly.
+
+     code.ch1.out - output from running chap1.p on code.ch1
+     code.lsp.out - output from running lisp.p on code.lsp
+     code.apl.out - output from running apl.p on code.apl
+     code.sch.out - output from running scheme.p on code.sch
+     code.ssl.out - output from running sasl.p on code.ssl
+     code.clu.out - output from running clu.p on code.clu
+     code.smt.out - output from running smalltalk.p on code.smt
+     code1.pro.out - output from running prolog.p on code1.pro
+     code2.pro.out - output from running prolog.p on code2.pro
+
+   "make" will use these files to test whether the interpreters are
+   running correctly.  Aside from that, they have no particular use,
+   as the book says what the correct value is for each expression.
+
+PROBLEMS
+
+The most likely source of problems when testing the interpreters is running
+out of memory.  To alleviate the problem, I have made the following
+adjustments:
+
+	code.lsp: The "quit" has been inserted before
+                line 414: "(r-e-p-loop '(", the first line of
+		an 86-line expression whose evaluation uses enormous
+		amounts of memory.
+
+	code.sch: Line 305: "(differentiate '(Dx (+ x c)))" has
+                been commented out.
+
