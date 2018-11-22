@@ -23,3 +23,7 @@ collection).  These were obtained automatically by using the
 Pascal-to-C translator p2c.  It is recommended that these be used
 only if a Pascal compiler is unavailable.  The contents of the
 C-distr directory are explained in its README file.
+
+--
+Source:
+http://www.cs.cmu.edu/afs/cs/project/ai-repository/ai/lang/lisp/impl/kamin/0.html
